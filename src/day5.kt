@@ -8,37 +8,42 @@ fun isReactive(a: Char, b: Char): Boolean {
 }
 
 fun react(trimChar: Char? = null): String {
-    val ios = Scanner(FileInputStream("day5.in"))
-    var input = ""
-    ios.use {
-        input = ios.nextLine()
-    }
+    var input = Scanner(FileInputStream("day5.in")).use { ios -> ios.nextLine() }
     if (trimChar != null) {
         input = input.replace(trimChar.toUpperCase().toString(), "", true)
     }
+    val output = input.toCharArray()
     var i = 1
+    var j = 0
     while (i < input.length) {
-        if (!isReactive(input[i], input[i - 1])) {
-            ++i
+        if (!isReactive(output[j], input[i])) {
+            output[++j] = input[i++]
         } else {
-            input = input.removeRange(i - 1, i + 1);
-            i = if (i > 1) i - 1 else 1
+            if(j > 0) {
+                i += 1
+                j -= 1
+            }
+            else {
+                output[0] = input[i+1]
+                j = 0
+                i += 2
+            }
         }
     }
-    return input
+    return output.sliceArray(IntRange(0, j)).joinToString("")
 }
 
 fun day5_1(): String {
-    return "slow"//react().length.toString()
+    return react().length.toString()
 }
 
 fun day5_2(): String {
-//    var shortest = 1e9.toInt()
-//    for (c in 'a'.rangeTo('z')) {
-//        var length = react(c).length
-//        if (length < shortest) {
-//            shortest = length
-//        }
-//    }
-    return "slower"// shortest.toString()
+    var shortest = 1e9.toInt()
+    for (c in 'a'.rangeTo('z')) {
+        var length = react(c).length
+        if (length < shortest) {
+            shortest = length
+        }
+    }
+    return shortest.toString()
 }
