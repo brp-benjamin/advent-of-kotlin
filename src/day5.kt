@@ -2,7 +2,7 @@ import java.io.FileInputStream
 import java.util.*
 
 fun isReactive(a: Char, b: Char): Boolean {
-    if(a.toLowerCase() == b.toLowerCase())
+    if (a.toLowerCase() == b.toLowerCase())
         return a != b
     return false
 }
@@ -13,34 +13,32 @@ fun react(trimChar: Char? = null): String {
     ios.use {
         input = ios.nextLine()
     }
-    if(trimChar != null) {
-        input = input.replace(trimChar.toUpperCase().toString(), "")
-        input = input.replace(trimChar.toLowerCase().toString(), "")
+    if (trimChar != null) {
+        input = input.replace(trimChar.toUpperCase().toString(), "", true)
     }
-    var i= 1
-    while(i < input.length) {
-        if(!isReactive(input[i], input[i-1])) {
+    var i = 1
+    while (i < input.length) {
+        if (!isReactive(input[i], input[i - 1])) {
             ++i
-        }
-        else {
+        } else {
             input = input.removeRange(i - 1, i + 1);
-            i = if(i > 1) i-1 else 1
+            i = if (i > 1) i - 1 else 1
         }
     }
     return input
 }
 
 fun day5_1(): String {
-    return react().length.toString()
+    return "slow"//react().length.toString()
 }
 
 fun day5_2(): String {
-    var shortest = 1e9.toInt()
-    for(c in 'a'.rangeTo('z')) {
-        var length = react(c).length
-        if(length < shortest) {
-            shortest = length
-        }
-    }
-    return shortest.toString()
+//    var shortest = 1e9.toInt()
+//    for (c in 'a'.rangeTo('z')) {
+//        var length = react(c).length
+//        if (length < shortest) {
+//            shortest = length
+//        }
+//    }
+    return "slower"// shortest.toString()
 }
