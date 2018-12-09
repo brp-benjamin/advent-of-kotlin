@@ -1,3 +1,5 @@
+package day7
+
 import java.io.FileInputStream
 import java.util.*
 
